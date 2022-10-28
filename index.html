@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MMR</title>
+  <link rel="stylesheet" href="mmr.css">
+</head>
+<body id = "body">
+  <div style="display:flex; justify-content: space-between; padding: 0 200px">
+    <img src="black.png" style="width:100px; height:100px; display: block">
+    <img src="living.png" style="width:250px; height:50px; display: block">
+  </div>
+  <div class="parent">
+    <div class="child">
+      <h1>MUSIC MINITSTERS RETREAT (MMR)</h1>
+      <h2>Registration Portal</h2>
+      <div class="put">
+        <div class="box">
+          <input type="file" id="input"/>
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="searchbar">
+      <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category" style="width: 500px; padding:10px">
+    </div>
+    <div id="tags"></div>
+  </div>
+
+  <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+
+
+  <script>
+    var input = document.getElementById('input')
+    var x;
+    const container = document.getElementById('tags');
+    input.addEventListener('change', function() {
+      readXlsxFile(input.files[0]).then(function(rows) {
+        // `rows` is an array of rows
+        // each row being an array of cells.
+        x = rows.slice(1,)
+        function returnCards(valuesCards) {
+          return "<div id=\"products-cards\">" + valuesCards.map((valuesCard, index) => `
+            <div class="cardo" id=${index}  onclick="dosomething(${index})">
+            <div>
+            <div style="display:flex; justify-content: space-between">
+              <img src="black.png" style="width:20px; height:20px; display: block">
+              <img src="living.png" style="width:100px; height:20px; display: block">
+            </div>
+            <h3 style="text-align:center"> Music Ministers Retreat (MMR 2022)</h3>
+            <div class="product-header">
+              <img src="male.png" style="width:150px; height:150px; display:block; margin: 0 auto"/ >
+            </div>
+            <div class="product-content">
+              <h4 style="text-align:center">${valuesCard[1]}</h4>
+              <p style="text-align:center">${valuesCard[2]}</p>
+              
+            </div> 
+            <!-- <button class="info-button">+ info</button> -->
+          </div> </div>`).join('') + "</div>";
+        }
+        
+        container.innerHTML = returnCards(x); 
+      })
+    })
+    function myFunction() {
+      var input, filter, divv, li, a, i;
+      input = document.getElementById("mySearch");
+      filter = input.value.toUpperCase();
+      divv = document.getElementById("products-cards");
+      console.log(divv)
+      li = divv.getElementsByClassName("cardo");
+      for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("h4")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+    function dosomething(dex){
+      console.log(dex)
+      var name, body, center,nax;
+      body = document.getElementById("body")
+      name = document.getElementById(dex).getElementsByTagName('h4')[0]
+      cente = document.getElementById(dex).getElementsByTagName('p')[0]
+      center = [[name.innerHTML, cente.innerHTML]]
+      body.innerHTML= "<div id=\"product\">" + center.map((valuesCard, index) => `
+        <div class="cardo" id=${index}  onclick="dosomething(${index})">
+        <div>
+        <div style="display:flex; justify-content: space-between">
+          <img src="black.png" style="width:40px; height:40px; display: block">
+          <img src="living.png" style="width:100px; height:40px; display: block">
+        </div>
+        <h3 style="text-align:center"> Music Ministers Retreat (MMR 2022)</h3>
+        <div class="product-header">
+          <img src="male.png" style="width:250px; height:250px; display:block; margin: 0 auto"/ >
+        </div>
+        <div class="product-content">
+          <h4 style="text-align:center">${valuesCard[0]}</h4>
+          <p style="text-align:center">${valuesCard[1]}</p>
+          
+        </div> 
+        <!-- <button class="info-button">+ info</button> -->
+      </div> </div>`).join('') + "</div>"
+    }
+
+    
+  </script>
+</body>
+</html>
