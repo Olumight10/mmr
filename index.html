@@ -89,7 +89,7 @@
       name = document.getElementById(dex).getElementsByTagName('h4')[0]
       cente = document.getElementById(dex).getElementsByTagName('p')[0]
       center = [[name.innerHTML, cente.innerHTML]]
-      var xyz =window.open("")
+      var xyz =window.open("", '_blank')
       xyz.document.write("<div id=\"product\" style=\"display: flex; flex-wrap: wrap; justify-content: space-around;\">" + center.map((valuesCard, index) => `
         <div class="cardo" id=${index}  onclick="dosomething(${index})" style="border: 5px solid black; width: 500px; margin: 10px;">
         <div>
